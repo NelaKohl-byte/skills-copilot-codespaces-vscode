@@ -1,94 +1,205 @@
-<header>
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kniha pro Tebe</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f3e6e8, #ffe5d9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-<!--
-  <<< Author notes: Course header >>>
-  Read <https://skills.github.com/quickstart> for more information about how to build courses using this template.
-  Include a 1280×640 image, course name in sentence case, and a concise description in emphasis.
-  In your repository settings: enable template repository, add your 1280×640 social image, auto delete head branches.
-  Next to "About", add description & tags; disable releases, packages, & environments.
-  Add your open source license, GitHub uses the MIT license.
--->
+        .book-container {
+            width: 90%;
+            max-width: 400px;
+            height: 90vh;
+            perspective: 2000px;
+        }
 
-# Code with GitHub Copilot
+        .book {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
 
-_GitHub Copilot can help you code by offering autocomplete-style suggestions right in VS Code and Codespaces._
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform-origin: left;
+            backface-visibility: hidden;
+            transform: rotateY(0deg);
+            overflow: hidden;
+        }
 
-</header>
+        .page-content {
+            padding: 20px;
+            text-align: center;
+        }
 
-<!--
-  <<< Author notes: Step 1 >>>
-  Choose 3-5 steps for your course.
-  The first step is always the hardest, so pick something easy!
-  Link to docs.github.com for further explanations.
-  Encourage users to open new tabs for steps!
--->
+        .page h2 {
+            color: #ff6f61;
+            font-size: 1.5em;
+        }
 
-## Step 1: Leverage Codespaces with VS Code for Copilot
+        .page:nth-child(even) {
+            transform-origin: right;
+        }
 
-_Welcome to "Develop With AI Powered Code Suggestions Using GitHub Copilot and VS Code"! :wave:_
+        .page:nth-child(odd) {
+            background: #fefefe;
+        }
 
-GitHub Copilot is an AI pair programmer that helps you write code faster and with less work. It draws context from comments and code to suggest individual lines and whole functions instantly. GitHub Copilot is powered by OpenAI Codex, a generative pretrained language model created by OpenAI.
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
 
-**Copilot works with many code editors including VS Code, Visual Studio, JetBrains IDE, and Neovim.**
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 400px;
+        }
 
-Additionally, GitHub Copilot is trained on all languages that appear in public repositories. For each language, the quality of suggestions you receive may depend on the volume and diversity of training data for that language.
+        .controls button {
+            background: #ff6f61;
+            color: white;
+            font-size: 1em;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-Using Copilot inside a Codespace shows just how easy it is to get up and running with GitHub's suite of [Collaborative Coding](https://github.com/features#features-collaboration) tools.
+        .controls button:hover {
+            background: #ff3d2e;
+        }
 
-> **Note**
-> This skills exercise will focus on leveraging GitHub Codespace. It is recommended that you complete the GitHub skill, [Codespaces](https://github.com/skills/code-with-codespaces), before moving forward with this exercise.
+        /* Responsivní design */
+        @media (max-width: 480px) {
+            .page h2 {
+                font-size: 1.2em;
+            }
 
-### :keyboard: Activity: Enable Copilot inside a Codespace
+            .page-content {
+                padding: 15px;
+            }
 
-**We recommend opening another browser tab to work through the following activities so you can keep these instructions open for reference.**
+            .controls button {
+                font-size: 0.9em;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book">
+            <!-- Stránka 1 -->
+            <div class="page">
+                <div class="page-content">
+                    <h2>Vítej, lásko</h2>
+                    <p>Jsem tak šťastná, že tě mám. Tato knížka je věnována tobě a našim společným okamžikům.</p>
+                </div>
+            </div>
 
-Before you open up a codespace on a repository, you can create a development container and define specific extensions or configurations that will be used or installed in your codespace. Let's create this development container and add copilot to the list of extensions.
+            <!-- Stránka 2 -->
+            <div class="page">
+                <div class="page-content">
+                    <h2>100 důvodů, proč tě miluji</h2>
+                    <ul style="text-align: left; font-size: 0.9em;">
+                        <li>Vždy mě rozesměješ.</li>
+                        <li>Věříš ve mě i v těžkých chvílích.</li>
+                        <li>Jsi laskavý ke všem okolo.</li>
+                        <li>Máme stejný smysl pro humor.</li>
+                        <li>Tvoje objetí je moje bezpečné místo.</li>
+                    </ul>
+                </div>
+            </div>
 
-1. Navigating back to your **Code** tab of your repository, click the **Add file** drop-down button, and then click `Create new file`.
-1. Type or paste the following in the empty text field prompt to name your file.
-   ```
-   .devcontainer/devcontainer.json
-   ```
-1. In the body of the new **.devcontainer/devcontainer.json** file, add the following content:
-   ```
-   {
-       // Name this configuration
-       "name": "Codespace for Skills!",
-       "customizations": {
-           "vscode": {
-               "extensions": [
-                   "GitHub.copilot"
-               ]
-           }
-       }
-   }
-   ```
-1. Select the option to **Commit directly to the `main` branch**, and then click the **Commit new file** button.
-1. Navigate back to the home page of your repository by clicking the **Code** tab located at the top left of the screen.
-1. Click the **Code** button located in the middle of the page.
-1. Click the **Codespaces** tab on the box that pops up.
-1. Click the **Create codespace on main** button.
+            <!-- Stránka 3 -->
+            <div class="page">
+                <div class="page-content">
+                    <h2>Nejkrásnější vzpomínky</h2>
+                    <p style="font-size: 0.9em;">
+                        1. Naše první rande v kavárně.<br>
+                        2. Výlet na hory a ten západ slunce.<br>
+                        3. První společné Vánoce.<br>
+                        4. Náš tajný piknik na louce.<br>
+                        5. Když jsme společně zvládli náš první problém.
+                    </p>
+                </div>
+            </div>
 
-   **Wait about 2 minutes for the codespace to spin itself up.**
+            <!-- Stránka 4 -->
+            <div class="page">
+                <div class="page-content">
+                    <h2>Naše písnička</h2>
+                    <p>
+                        Tvoje písnička je pro mě navždy <strong>Tereza Kerndlová – Schody z nebe</strong>.
+                    </p>
+                </div>
+            </div>
 
-1. Verify your codespace is running. The browser should contain a VS Code web-based editor and a terminal should be present such as the below:
-   ![Screen Shot 2023-03-09 at 9 09 07 AM](https://user-images.githubusercontent.com/26442605/224102962-d0222578-3f10-4566-856d-8d59f28fcf2e.png)
-1. The `copilot` extension should show up in the VS Code extension list. Click the extensions sidebar tab. You should see the following:
-   ![Screen Shot 2023-03-09 at 9 04 13 AM](https://user-images.githubusercontent.com/26442605/224102514-7d6d2f51-f435-401d-a529-7bae3ae3e511.png)
+            <!-- Stránka 5 -->
+            <div class="page">
+                <div class="page-content">
+                    <h2>Oblíbený obrázek</h2>
+                    <img src="https://via.placeholder.com/300x200" alt="Oblíbený obrázek" style="width: 100%; border-radius: 10px;">
+                </div>
+            </div>
+        </div>
+    </div>
 
-**Wait about 60 seconds then refresh your repository landing page for the next step.**
+    <div class="controls">
+        <button onclick="prevPage()">Předchozí</button>
+        <button onclick="nextPage()">Další</button>
+    </div>
 
-<footer>
+    <script>
+        const book = document.querySelector('.book');
+        const pages = document.querySelectorAll('.page');
+        let currentPage = 0;
 
-<!--
-  <<< Author notes: Footer >>>
-  Add a link to get support, GitHub status page, code of conduct, license link.
--->
+        function updatePages() {
+            pages.forEach((page, index) => {
+                if (index <= currentPage) {
+                    page.classList.add('flipped');
+                } else {
+                    page.classList.remove('flipped');
+                }
+            });
+        }
 
----
+        function nextPage() {
+            if (currentPage < pages.length - 1) {
+                currentPage++;
+                updatePages();
+            }
+        }
 
-Get help: [Post in our discussion board](https://github.com/orgs/skills/discussions/categories/code-with-copilot) &bull; [Review the GitHub status page](https://www.githubstatus.com/)
-
-&copy; 2023 GitHub &bull; [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md) &bull; [MIT License](https://gh.io/mit)
-
-</footer>
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                updatePages();
+            }
+        }
+    </script>
+</body>
+</html>
